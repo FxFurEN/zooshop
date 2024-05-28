@@ -6,11 +6,13 @@ import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
 import { Link } from "react-router-dom";
+import { supabase } from "../lib/supabase";
 
 const Products = () => {
   const [data, setData] = useState([]);
   const [filter, setFilter] = useState(data);
   const [loading, setLoading] = useState(false);
+  const [user, setUser] = useState(null);
   let componentMounted = true;
 
   const dispatch = useDispatch();
@@ -18,6 +20,18 @@ const Products = () => {
   const addProduct = (product) => {
     dispatch(addCart(product))
   }
+
+  useEffect(() => {
+    const getUser = async () => {
+        const { data, error } = await supabase.auth.getUser();
+        if (data) {
+            setUser(data.user);
+        } else if (error) {
+            console.log(error.message);
+        }
+    };
+    getUser();
+}, []);
 
   useEffect(() => {
     const getProducts = async () => {
@@ -102,16 +116,25 @@ const Products = () => {
                 </div>
                 <ul className="list-group list-group-flush">
                   <li className="list-group-item lead">$ {product.price}</li>
-                  {/* <li className="list-group-item">Dapibus ac facilisis in</li>
-                    <li className="list-group-item">Vestibulum at eros</li> */}
                 </ul>
                 <div className="card-body">
-                  <Link to={"/product/" + product.id} className="btn btn-dark m-1">
-                    Buy Now
-                  </Link>
-                  <button className="btn btn-dark m-1" onClick={() => addProduct(product)}>
-                    Add to Cart
-                  </button>
+                        {user ? (
+                            <>
+                                <Link to={"/product/" + product.id} className="btn btn-dark m-1">
+                                  Buy Now
+                                </Link>
+                                <button className="btn btn-dark m-1" onClick={() => addProduct(product)}>
+                                  Add to Cart
+                                </button>
+                            </>
+                        ) : (
+                            <>
+                                <Link to={"/login"} className="btn btn-dark m-1">
+                                  Войдите чтобы добавить товар в корзину
+                                </Link>
+                            </>
+                        )}
+                  
                 </div>
               </div>
             </div>
