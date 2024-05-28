@@ -21,34 +21,39 @@ const Products = () => {
     dispatch(addCart(product))
   }
 
-  useEffect(() => {
-    const getUser = async () => {
-        const { data, error } = await supabase.auth.getUser();
-        if (data) {
-            setUser(data.user);
-        } else if (error) {
-            console.log(error.message);
-        }
-    };
-    getUser();
-}, []);
+    useEffect(() => {
+      const getUser = async () => {
+          const { data, error } = await supabase.auth.getUser();
+          if (data) {
+              setUser(data.user);
+          } else if (error) {
+              console.log(error.message);
+          }
+      };
+      getUser();
+  }, []);
 
   useEffect(() => {
     const getProducts = async () => {
       setLoading(true);
-      const response = await fetch("https://fakestoreapi.com/products/");
-      if (componentMounted) {
-        setData(await response.clone().json());
-        setFilter(await response.json());
+      const { data: products, error } = await supabase.from('products').select('*');
+
+      if (error) {
+        console.error('Error fetching products:', error.message);
         setLoading(false);
+        return;
       }
 
-      return () => {
-        componentMounted = false;
-      };
+      setData(products);
+      setFilter(products);
+      setLoading(false);
     };
 
     getProducts();
+
+    return () => {
+      componentMounted = false;
+    };
   }, []);
 
   const Loading = () => {
@@ -79,21 +84,31 @@ const Products = () => {
     );
   };
 
-  const filterProduct = (cat) => {
-    const updatedList = data.filter((item) => item.category === cat);
+  const filterProduct = (categoryId) => {
+    const updatedList = data.filter((item) => item.category_id === parseInt(categoryId));
     setFilter(updatedList);
-  }
+  };
+  
   const ShowProducts = () => {
     return (
       <>
         <div className="buttons text-center py-5">
           <button className="btn btn-outline-dark btn-sm m-2" onClick={() => setFilter(data)}>All</button>
-          <button className="btn btn-outline-dark btn-sm m-2" onClick={() => filterProduct("men's clothing")}>Men's Clothing</button>
-          <button className="btn btn-outline-dark btn-sm m-2" onClick={() => filterProduct("women's clothing")}>
-            Women's Clothing
+          <button className="btn btn-outline-dark btn-sm m-2" onClick={() => filterProduct("1")}>
+            Еда
           </button>
-          <button className="btn btn-outline-dark btn-sm m-2" onClick={() => filterProduct("jewelery")}>Jewelery</button>
-          <button className="btn btn-outline-dark btn-sm m-2" onClick={() => filterProduct("electronics")}>Electronics</button>
+          <button className="btn btn-outline-dark btn-sm m-2" onClick={() => filterProduct("2")}>
+            Игрушка
+          </button>
+          <button className="btn btn-outline-dark btn-sm m-2" onClick={() => filterProduct("3")}>
+          Лежанки
+          </button>
+          <button className="btn btn-outline-dark btn-sm m-2" onClick={() => filterProduct("4")}>
+          Миски
+          </button>
+          <button className="btn btn-outline-dark btn-sm m-2" onClick={() => filterProduct("5")}>
+          Одежда
+          </button>
         </div>
 
         {filter.map((product) => {
@@ -102,43 +117,41 @@ const Products = () => {
               <div className="card text-center h-100" key={product.id}>
                 <img
                   className="card-img-top p-3"
-                  src={product.image}
+                  src={product.image_url} 
                   alt="Card"
                   height={300}
                 />
                 <div className="card-body">
                   <h5 className="card-title">
-                    {product.title.substring(0, 12)}...
+                    {product.name}
                   </h5>
                   <p className="card-text">
-                    {product.description.substring(0, 90)}...
+                    {product.description}
                   </p>
                 </div>
                 <ul className="list-group list-group-flush">
-                  <li className="list-group-item lead">$ {product.price}</li>
+                  <li className="list-group-item lead">{product.price} тг.</li>
                 </ul>
                 <div className="card-body">
-                        {user ? (
-                            <>
-                                <Link to={"/product/" + product.id} className="btn btn-dark m-1">
-                                  Buy Now
-                                </Link>
-                                <button className="btn btn-dark m-1" onClick={() => addProduct(product)}>
-                                  Add to Cart
-                                </button>
-                            </>
-                        ) : (
-                            <>
-                                <Link to={"/login"} className="btn btn-dark m-1">
-                                  Войдите чтобы добавить товар в корзину
-                                </Link>
-                            </>
-                        )}
-                  
+                  {user ? (
+                    <>
+                      <Link to={"/product/" + product.id} className="btn btn-dark m-1">
+                        Buy Now
+                      </Link>
+                      <button className="btn btn-dark m-1" onClick={() => addProduct(product)}>
+                        Add to Cart
+                      </button>
+                    </>
+                  ) : (
+                    <>
+                      <Link to={"/login"} className="btn btn-dark m-1">
+                        Войдите чтобы добавить товар в корзину
+                      </Link>
+                    </>
+                  )}
                 </div>
               </div>
             </div>
-
           );
         })}
       </>
