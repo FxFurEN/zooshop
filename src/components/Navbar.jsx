@@ -55,6 +55,7 @@ const Navbar = () => {
                         {user ? (
                             <>
                                 <button className="btn btn-outline-dark m-2" onClick={handleSignOut}>Выйти</button>
+                                <NavLink to="/cart" className="btn btn-outline-dark m-2"><i className="fa fa-cart-shopping mr-1"></i> Корзина ({state.length}) </NavLink>
                             </>
                         ) : (
                             <>
@@ -62,7 +63,6 @@ const Navbar = () => {
                                 <NavLink to="/register" className="btn btn-outline-dark m-2"><i className="fa fa-user-plus mr-1"></i> Регистрация</NavLink>
                             </>
                         )}
-                        <NavLink to="/cart" className="btn btn-outline-dark m-2"><i className="fa fa-cart-shopping mr-1"></i> Корзина ({state.length}) </NavLink>
                     </div>
                 </div>
             </div>
