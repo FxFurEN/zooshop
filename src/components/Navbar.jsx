@@ -26,6 +26,7 @@ const Navbar = () => {
         } else {
             setUser(null); // Обновляем состояние пользователя
         }
+        window.location.reload();
     };
 
     return (
