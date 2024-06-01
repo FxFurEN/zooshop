@@ -58,17 +58,15 @@ const Checkout = () => {
   };
 
 
-  const ShowCheckout = () => {
-    let subtotal = 0;
-    let shipping = 30.0;
+  const ShowCheckout = () => { 
     let totalItems = 0;
-    state.map((item) => {
-      return (subtotal += item.price * item.qty);
+    let subtotal = 0;
+    state.forEach((item) => {
+      subtotal += item.price * item.qty;
     });
 
-    state.map((item) => {
-      return (totalItems += item.qty);
-    });
+    let shipping = subtotal * 0.1; 
+    shipping += 30; 
     return (
       <>
         <div className="container py-5">
@@ -85,7 +83,7 @@ const Checkout = () => {
                     </li>
                     <li className="list-group-item d-flex justify-content-between align-items-center px-0">
                       Доставка
-                      <span>{shipping} тг.</span>
+                      <span>{Math.round(shipping)} тг.</span>
                     </li>
                     <li className="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-3">
                       <div>
