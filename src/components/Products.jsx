@@ -126,10 +126,10 @@ const Products = () => {
                 {user ? (
                   <>
                     <Link to={"/product/" + product.id} className="btn btn-dark m-1">
-                      Buy Now
+                      Заказать сейчас
                     </Link>
                     <button className="btn btn-dark m-1" onClick={() => addProduct(product)}>
-                      Add to Cart
+                     Добавить в корзину
                     </button>
                   </>
                 ) : (
