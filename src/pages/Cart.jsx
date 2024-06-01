@@ -32,7 +32,7 @@ const Cart = () => {
 
   const ShowCart = () => {
     let subtotal = 0;
-    let shipping = 30.0;
+    let shipping = 550.0;
     let totalItems = 0;
     state.map((item) => {
       return (subtotal += item.price * item.qty);
@@ -49,7 +49,7 @@ const Cart = () => {
               <div className="col-md-8">
                 <div className="card mb-4">
                   <div className="card-header py-3">
-                    <h5 className="mb-0">Item List</h5>
+                    <h5 className="mb-0">Список товаров</h5>
                   </div>
                   <div className="card-body">
                     {state.map((item) => {
@@ -62,9 +62,9 @@ const Cart = () => {
                                 data-mdb-ripple-color="light"
                               >
                                 <img
-                                  src={item.image}
+                                  src={item.image_url}
                                   // className="w-100"
-                                  alt={item.title}
+                                  alt={item.name}
                                   width={100}
                                   height={75}
                                 />
@@ -73,7 +73,7 @@ const Cart = () => {
 
                             <div className="col-lg-5 col-md-6">
                               <p>
-                                <strong>{item.title}</strong>
+                                <strong>{item.name}</strong>
                               </p>
                               {/* <p>Color: blue</p>
                               <p>Size: M</p> */}
@@ -108,7 +108,7 @@ const Cart = () => {
                               <p className="text-start text-md-center">
                                 <strong>
                                   <span className="text-muted">{item.qty}</span>{" "}
-                                  x ${item.price}
+                                  x {item.price} тг.
                                 </strong>
                               </p>
                             </div>
@@ -124,23 +124,23 @@ const Cart = () => {
               <div className="col-md-4">
                 <div className="card mb-4">
                   <div className="card-header py-3 bg-light">
-                    <h5 className="mb-0">Order Summary</h5>
+                    <h5 className="mb-0">Сводка товаров</h5>
                   </div>
                   <div className="card-body">
                     <ul className="list-group list-group-flush">
                       <li className="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
-                        Products ({totalItems})<span>${Math.round(subtotal)}</span>
+                        Товаров ({totalItems})<span>{Math.round(subtotal)} тг.</span>
                       </li>
                       <li className="list-group-item d-flex justify-content-between align-items-center px-0">
-                        Shipping
-                        <span>${shipping}</span>
+                        Доставка
+                        <span>{shipping} тг.</span>
                       </li>
                       <li className="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-3">
                         <div>
-                          <strong>Total amount</strong>
+                          <strong>Общая сумма</strong>
                         </div>
                         <span>
-                          <strong>${Math.round(subtotal + shipping)}</strong>
+                          <strong>{Math.round(subtotal + shipping)} тг.</strong>
                         </span>
                       </li>
                     </ul>
@@ -149,7 +149,7 @@ const Cart = () => {
                       to="/checkout"
                       className="btn btn-dark btn-lg btn-block"
                     >
-                      Go to checkout
+                      Перейти к оформлению заказа
                     </Link>
                   </div>
                 </div>
