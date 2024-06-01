@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Footer, Navbar } from "../components";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { supabase } from "../lib/supabase";
 import { notification } from 'antd';
 
@@ -33,6 +33,7 @@ const Checkout = () => {
         message: 'Заказ оформлен',
         description: 'Ваш заказ успешно оформлен.',
       });
+      window.location.reload();
     } catch (error) {
       console.error(error.message);
       notification.error({
