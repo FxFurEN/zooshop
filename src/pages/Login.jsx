@@ -1,40 +1,71 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import { Footer, Navbar } from "../components";
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { Footer, Navbar } from '../components';
+import { supabase } from '../lib/supabase'; 
 
 const Login = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    const { error } = await supabase.auth.signInWithPassword({
+      email: email,
+      password: password,
+    })
+    if (error) {
+      setError(error.message);
+    } else {
+      navigate('/'); // Перенаправление на главную страницу после успешного входа
+    }
+  };
+
   return (
     <>
       <Navbar />
       <div className="container my-3 py-3">
         <h1 className="text-center">Авторизация</h1>
         <hr />
-        <div class="row my-4 h-100">
+        <div className="row my-4 h-100">
           <div className="col-md-4 col-lg-4 col-sm-8 mx-auto">
-            <form>
-              <div class="my-3">
-                <label for="display-4">Почта</label>
+            <form onSubmit={handleLogin}>
+              <div className="my-3">
+                <label htmlFor="email">Почта</label>
                 <input
                   type="email"
-                  class="form-control"
-                  id="floatingInput"
+                  className="form-control"
+                  id="email"
                   placeholder="name@example.com"
-                />
-              </div>
-              <div class="my-3">
-                <label for="floatingPassword display-4">Пароль</label>
-                <input
-                  type="password"
-                  class="form-control"
-                  id="floatingPassword"
-                  placeholder="Password"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
                 />
               </div>
               <div className="my-3">
-                <p>Нет Аккаунта? <Link to="/register" className="text-decoration-underline text-info">Зарегистрироваться</Link> </p>
+                <label htmlFor="password">Пароль</label>
+                <input
+                  type="password"
+                  className="form-control"
+                  id="password"
+                  placeholder="Password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
+              </div>
+              {error && <div className="alert alert-danger">{error}</div>}
+              <div className="my-3">
+                <p>
+                  Нет аккаунта?{' '}
+                  <Link to="/register" className="text-decoration-underline text-info">
+                    Зарегистрироваться
+                  </Link>
+                </p>
               </div>
               <div className="text-center">
-                <button class="my-2 mx-auto btn btn-dark" type="submit" disabled>
+                <button className="my-2 mx-auto btn btn-dark" type="submit">
                   Войти в систему
                 </button>
               </div>
