@@ -43,10 +43,7 @@ const Navbar = () => {
                             <NavLink className="nav-link" to="/">Главная</NavLink>
                         </li>
                         <li className="nav-item">
-                            <NavLink className="nav-link" to="/product">Кошки</NavLink>
-                        </li>
-                        <li className="nav-item">
-                            <NavLink className="nav-link" to="/product">Собаки</NavLink>
+                            <NavLink className="nav-link" to="/product">Товары</NavLink>
                         </li>
                         <li className="nav-item">
                             <NavLink className="nav-link" to="/about">О нас</NavLink>
