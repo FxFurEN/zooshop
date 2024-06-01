@@ -16,6 +16,19 @@ CREATE TABLE Products (
     FOREIGN KEY (category_id) REFERENCES Categories(id)
 );
 
+CREATE TABLE Orders (
+  id SERIAL PRIMARY KEY,
+  firstName TEXT NOT NULL,
+  lastName TEXT NOT NULL,
+  email TEXT NOT NULL,
+  address TEXT NOT NULL,
+  address2 TEXT,
+  city TEXT NOT NULL,
+  zip TEXT NOT NULL
+);
+
+
+
 INSERT INTO Categories (name) VALUES
     ('Еда'),
     ('Игрушка'),
