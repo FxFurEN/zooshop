@@ -10,8 +10,8 @@ const { Text, Title } = Typography;
 
 const Footer = () => {
   return (
-    <footer className="footer text-center py-5" style={{ backgroundColor: "#f0f0f0" }}>
-      <div className="container">
+    <footer className="footer py-5 bg-gray-200">
+      <div className="container mx-auto">
         <Row gutter={[16, 16]} justify="center">
           <Col xs={24} sm={12} md={6}>
             <Title level={5}>О компании</Title>
