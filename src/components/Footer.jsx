@@ -29,9 +29,7 @@ const Footer = () => {
             <Title level={5}>Навигация</Title>
             <Space direction="vertical">
               <Text><a href="/">Главная</a></Text>
-              <Text><a href="/shop">Магазин</a></Text>
               <Text><a href="/about">О нас</a></Text>
-              <Text><a href="/contact">Контакты</a></Text>
             </Space>
           </Col>
           <Col xs={24} sm={12} md={6}>
