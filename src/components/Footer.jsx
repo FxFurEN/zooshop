@@ -21,7 +21,7 @@ const Footer = () => {
             <Title level={5}>Контакты</Title>
             <Space direction="vertical">
               <Text>Адрес: проспект Достык-Дружбы 160, Уральск, Казахстан</Text>
-              <Text>Телефон: +7 7112 30 70 06</Text>
+              <Text>Телефон: +7 7112 52 14 88</Text>
               <Text>Email: zooshop_america@gmail.com</Text>
             </Space>
           </Col>
