@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { supabase } from "../lib/supabase";
 import { notification, Form, Input, Button, Select, Card, Divider } from 'antd';
+import MaskedInput from 'antd-mask-input';
 import { Footer, Navbar } from "../components";
 
 const { Option } = Select;
@@ -142,6 +143,14 @@ const Checkout = () => {
                   rules={[{ required: true, message: 'Почтовый индекс обязателен.' }]}
                 >
                   <Input placeholder="Введите почтовый индекс" />
+                </Form.Item>
+
+                <Form.Item
+                  name="cardNumber"
+                  label="Номер карточки"
+                  rules={[{ required: true, message: 'Необходимо ввести номер карточки.' }]}
+                >
+                  <MaskedInput mask="0000-0000-0000-0000" placeholder="Введите номер карточки" />
                 </Form.Item>
 
                 <Divider />
