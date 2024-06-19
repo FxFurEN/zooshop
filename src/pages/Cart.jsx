@@ -31,16 +31,15 @@ const Cart = () => {
   };
 
   const ShowCart = () => {
-    let subtotal = 0;
-    let shipping = 550.0;
     let totalItems = 0;
-    state.map((item) => {
-      return (subtotal += item.price * item.qty);
+    let subtotal = 0;
+    state.forEach((item) => {
+      totalItems += item.qty;
+      subtotal += item.price * item.qty;
     });
 
-    state.map((item) => {
-      return (totalItems += item.qty);
-    });
+    let shipping = subtotal * 0.1; 
+    shipping += 30; 
     return (
       <>
         <section className="h-100 gradient-custom">
@@ -165,7 +164,7 @@ const Cart = () => {
     <>
       <Navbar />
       <div className="container my-3 py-3">
-        <h1 className="text-center">Cart</h1>
+        <h1 className="text-center">Корзина</h1>
         <hr />
         {state.length > 0 ? <ShowCart /> : <EmptyCart />}
       </div>

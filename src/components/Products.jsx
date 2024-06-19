@@ -7,6 +7,7 @@ import "react-loading-skeleton/dist/skeleton.css";
 
 import { Link } from "react-router-dom";
 import { supabase } from "../lib/supabase";
+import { notification } from "antd";
 
 const Products = () => {
   const [data, setData] = useState([]);
@@ -21,6 +22,9 @@ const Products = () => {
 
   const addProduct = (product) => {
     dispatch(addCart(product));
+    notification.success({
+      message: "Товар добавлен в корзину",
+    })
   };
 
   useEffect(() => {
