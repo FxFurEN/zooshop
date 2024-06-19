@@ -12,6 +12,17 @@ const Checkout = () => {
   const state = useSelector((state) => state.handleCart);
   const [form] = Form.useForm();
 
+  // Кастомный валидатор для номера карточки
+  const validateCardNumber = (_, value) => {
+    const rawValue = value.replace(/-/g, ''); // Удаляем все дефисы из значения
+    const isDigitsOnly = /^\d+$/.test(rawValue); // Проверяем, состоит ли строка только из цифр
+    if (!isDigitsOnly || rawValue.length !== 16) {
+      return Promise.reject(new Error('Пожалуйста, введите полный номер карточки.'));
+    }
+    return Promise.resolve();
+  };
+  
+
   const handleSubmit = async (values) => {
     try {
       const { data, error } = await supabase.from("orders").insert(values);
@@ -148,7 +159,10 @@ const Checkout = () => {
                 <Form.Item
                   name="cardNumber"
                   label="Номер карточки"
-                  rules={[{ required: true, message: 'Необходимо ввести номер карточки.' }]}
+                  rules={[
+                    { required: true, message: 'Необходимо ввести номер карточки.' },
+                    { validator: validateCardNumber }, // Используем кастомный валидатор
+                  ]}
                 >
                   <MaskedInput mask="0000-0000-0000-0000" placeholder="Введите номер карточки" />
                 </Form.Item>
